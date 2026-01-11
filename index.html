@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Life in Weeks - Visualizer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Prompt:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "Prompt", "sans-serif"],
+              thai: ["Prompt", "sans-serif"],
+            },
+            colors: {
+              "life-bg": "#FDFBF7",
+              "life-accent": "#1A1A1A",
+              "life-gray": "#888888",
+            },
+          },
+        },
+      };
+    </script>
+
+    <link rel="stylesheet" href="./src/styles/main.css" />
+  </head>
+  <body
+    class="font-sans text-life-accent antialiased selection:bg-black selection:text-white"
+  >
+    <div class="noise-overlay"></div>
+
+    <nav
+      class="fixed top-0 left-0 w-full p-6 flex justify-between items-center z-50 mix-blend-difference text-white"
+    >
+      <div class="text-xl font-bold tracking-tighter font-thai">
+        LIFE VISUALIZER
+      </div>
+      <div class="text-sm font-light opacity-70 hidden md:block">
+        RELAY CHALLENGE: LEG 1
+      </div>
+    </nav>
+
+    <div id="smooth-wrapper">
+      <div id="smooth-content">
+        <div class="horizontal-container" id="scroll-container">
+          <section class="panel bg-life-bg" id="section-1">
+            <div
+              class="floating-element bg-blue-200 w-64 h-64 md:w-96 md:h-96 rounded-full -top-10 -left-10"
+              data-speed="0.5"
+            ></div>
+            <div
+              class="floating-element bg-purple-200 w-48 h-48 md:w-80 md:h-80 rounded-full bottom-20 right-5 md:right-20"
+              data-speed="0.2"
+            ></div>
+
+            <h1
+              class="text-5xl md:text-9xl font-bold mb-2 tracking-tighter opacity-0 title-anim"
+            >
+              YOUR LIFE
+            </h1>
+            <h1
+              class="text-5xl md:text-9xl font-light italic mb-6 opacity-0 title-anim"
+              style="transition-delay: 0.1s"
+            >
+              IN WEEKS
+            </h1>
+            <p
+              class="text-base md:text-xl text-life-gray max-w-md text-center font-thai opacity-0 title-anim"
+              style="transition-delay: 0.2s"
+            >
+              เลื่อนลงเพื่อดูแผนที่ชีวิตของคุณ
+            </p>
+            <div class="absolute bottom-10 animate-bounce">
+              <span class="text-xs tracking-widest uppercase"
+                >Scroll to begin</span
+              >
+            </div>
+          </section>
+
+          <section class="panel bg-white" id="section-2">
+            <div
+              class="relative z-10 text-center md:text-left md:absolute md:top-10 md:left-10 mb-8 md:mb-0"
+            >
+              <h2 class="text-3xl md:text-4xl font-bold font-thai">
+                แผนที่ชีวิต
+              </h2>
+              <p class="text-gray-400 text-sm">หนึ่งจุด = หนึ่งสัปดาห์</p>
+            </div>
+
+            <div class="weeks-grid" id="weeks-grid"></div>
+
+            <div
+              class="absolute right-10 bottom-20 text-8xl md:text-9xl font-bold text-outline opacity-20 pointer-events-none parallax-text hidden md:block"
+              data-speed="-20"
+            >
+              4,000
+            </div>
+          </section>
+
+          <section class="panel bg-life-bg" id="section-3">
+            <div
+              class="flex flex-col md:flex-row items-center justify-center w-full h-full relative gap-6 md:gap-0"
+            >
+              <h2
+                class="hidden md:block absolute text-[15vw] font-bold text-gray-100 whitespace-nowrap z-0"
+              >
+                MEMORIES
+              </h2>
+              <div
+                class="card relative z-10 w-64 h-72 md:h-80 bg-black text-white p-6 flex flex-col justify-end transform md:-rotate-6 shadow-2xl"
+                data-speed="0.8"
+              >
+                <div class="absolute top-4 right-4 text-3xl md:text-4xl">
+                  👶
+                </div>
+                <h3 class="text-xl md:text-2xl font-bold font-thai">วัยเด็ก</h3>
+              </div>
+              <div
+                class="card relative z-10 w-64 h-72 md:h-80 bg-white border border-gray-200 p-6 flex flex-col justify-end transform md:rotate-3 md:mx-10 shadow-xl"
+                data-speed="1.2"
+              >
+                <div class="absolute top-4 right-4 text-3xl md:text-4xl">
+                  🎓
+                </div>
+                <h3 class="text-xl md:text-2xl font-bold font-thai text-black">
+                  การศึกษา
+                </h3>
+              </div>
+              <div
+                class="card relative z-10 w-64 h-72 md:h-80 bg-gray-900 text-white p-6 flex flex-col justify-end transform md:-rotate-3 md:mt-20 shadow-2xl"
+                data-speed="0.5"
+              >
+                <div class="absolute top-4 right-4 text-3xl md:text-4xl">
+                  💼
+                </div>
+                <h3 class="text-xl md:text-2xl font-bold font-thai">ทำงาน</h3>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel bg-black text-white" id="section-4">
+            <div class="max-w-4xl text-center relative z-10 px-4">
+              <h2
+                class="text-4xl md:text-7xl font-bold mb-6 font-thai parallax-y"
+                data-speed="1.5"
+              >
+                อนาคตอยู่ในมือคุณ
+              </h2>
+              <button
+                class="px-8 py-3 md:px-8 md:py-4 border border-white hover:bg-white hover:text-black transition-all duration-300 rounded-full font-thai tracking-wide text-sm md:text-base"
+              >
+                เริ่มวางแผนเวลาของคุณ
+              </button>
+            </div>
+            <div
+              class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] md:w-[50vw] md:h-[50vw] bg-blue-600 rounded-full filter blur-[80px] md:blur-[120px] opacity-20 animate-pulse"
+            ></div>
+          </section>
+
+          <section
+            class="panel bg-life-bg flex-col justify-center"
+            id="section-5"
+          >
+            <h3 class="text-lg md:text-2xl font-thai text-gray-400 mb-4">
+              Relay Challenge Leg 1 Complete
+            </h3>
+            <div
+              class="w-full overflow-hidden border-y border-black py-4 bg-white"
+            >
+              <div
+                class="marquee whitespace-nowrap text-4xl md:text-8xl font-bold uppercase tracking-tighter"
+              >
+                Create Your Legacy • Don't Waste Time • Create Your Legacy •
+                Don't Waste Time •
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./src/js/main.js"></script>
+  </body>
+</html>
